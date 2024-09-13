@@ -14,5 +14,5 @@ resource "google_project_iam_member" "gcs-sa-admin" {
 resource "google_service_account_iam_member" "gcs-sa-admin" {
   service_account_id = google_service_account.gcs-sa-admin.id
   role               = "roles/iam.workloadIdentityUser"
-  member             = "serviceAccount:${local.project}.svc.id.goog[staging/gcs-sa-admin]"
+  member             = "serviceAccount:${local.project}.svc.id.goog[${local.env}/gcs-sa-admin]"
 }

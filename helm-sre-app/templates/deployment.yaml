@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.namespace }}-app-deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.namespace }}-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.namespace }}-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          app: {{ .Values.namespace }}-app
+      spec:
+        containers:
+        - env:
+          envFrom:
+          - secretRef:
+              name: {{ .Values.namespace }}-app-secret
+          image: {{ .Values.image.repository }}
+          # command: ["sleep", "3600"]
+          # livenessProbe:
+          #   failureThreshold: 3
+          #   httpGet:
+          #     path: /health
+          #     port: {{ .Values.service.port }}
+          #     scheme: HTTP
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 20
+          #   successThreshold: 1
+          #   timeoutSeconds: 1
+          # readinessProbe:
+          #   failureThreshold: 3
+          #   httpGet:
+          #     path: /health
+          #     port: {{ .Values.service.port }}
+          #     scheme: HTTP
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 20
+          #   successThreshold: 1
+          #   timeoutSeconds: 1
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
+          # startupProbe:
+          #   failureThreshold: 3
+          #   httpGet:
+          #     path: /health
+          #     port: {{ .Values.service.port }}
+          #     scheme: HTTP
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 1
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          name: {{ .Values.namespace }}-app
+          

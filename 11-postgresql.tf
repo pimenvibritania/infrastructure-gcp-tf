@@ -21,12 +21,9 @@ resource "google_sql_database_instance" "postgres_instance" {
   }
 
   depends_on = [
-    google_project_service.enable_sql_admin,
-    google_project_service.enable_vpc_access,
-    google_project_service.enable_networking_access,
+    google_project_service.services,
     google_service_networking_connection.private_vpc_connection
   ]
-
 }
 
 resource "google_sql_database" "default_db" {
@@ -38,20 +35,4 @@ resource "google_sql_user" "postgres_user" {
   name     = "sre-application-user"
   instance = google_sql_database_instance.postgres_instance.name
   password = "kmzway87aa"
-}
-
-# Enable required APIs for Cloud SQL and VPC access
-resource "google_project_service" "enable_sql_admin" {
-  service = "sqladmin.googleapis.com"
-  project = local.project
-}
-
-resource "google_project_service" "enable_vpc_access" {
-  service = "vpcaccess.googleapis.com"
-  project = local.project
-}
-
-resource "google_project_service" "enable_networking_access" {
-  service = "servicenetworking.googleapis.com"
-  project = local.project
 }

@@ -1,3 +1,4 @@
+
 resource "google_service_account" "gitlab-runner" {
   account_id   = "gitlab-runner-sa"
   display_name = "Gitlab Runner SA for VM Instance"
@@ -32,4 +33,6 @@ resource "google_compute_instance" "gitlab-runner" {
       "https://www.googleapis.com/auth/cloud-platform"
     ]
   }
+
+  depends_on = [google_project_service.services]
 }

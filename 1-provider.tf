@@ -7,7 +7,7 @@ provider "google" {
 # https://www.terraform.io/language/settings/backends/gcs
 terraform {
   backend "gcs" {
-    bucket = "terraform-state-development-2613"
+    bucket = "pimenvibritania-terraform-state-2613"
     prefix = "terraform/state"
   }
   required_providers {

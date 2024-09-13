@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  finalizers:
+  - service.kubernetes.io/load-balancer-cleanup
+  - gke.networking.io/l4-ilb-v2
+  name: haproxy-db-svc
+  namespace: haproxy
+spec:
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: postgresql
+    nodePort: 30925
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: haproxy-db
+  sessionAffinity: None
+  type: LoadBalancer
