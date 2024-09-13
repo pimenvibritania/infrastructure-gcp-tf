@@ -63,7 +63,7 @@ ingress:
           pathType: Prefix
 
   tls:
-   - secretName: chart-example-tls
+   - secretName: sre-application-crt-tls
      hosts:
        - sre.pimenvibritania.site
 
