@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: haproxy-db
+  name: haproxy-db
+  namespace: haproxy
+spec:
+  selector:
+    matchLabels:
+      app: haproxy-db
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: haproxy-db
+    spec:
+      containers:
+      - image: pimenvibritania/haproxy
+        imagePullPolicy: Always
+        name: haproxy
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/haproxy/
+          name: haproxy-db
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: haproxy-db
+        name: haproxy-db
