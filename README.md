@@ -21,6 +21,7 @@ helm install my-ing ingress-nginx/ingress-nginx \
 ```
 
 ## Installing HA-Proxy for CloudSQL
+Because the database instance is `private`, so we will use HA-Proxy to connect into database from local machine.
 - Go to `k8s/haproxy-dev` for development cluster
 - Go to `k8s/haproxy-prod` for production cluster
 - Make sure the `cm.yaml`, change with your CloudSQL private IP
