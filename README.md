@@ -1,7 +1,7 @@
 # SRE-Infra
 
 ## Topology
-![Alt text here](sre.svg)
+![Topology](sre.svg)
 
 ## Provisioning Infrastructure
 - Make sure the `0-locals.tf` file
