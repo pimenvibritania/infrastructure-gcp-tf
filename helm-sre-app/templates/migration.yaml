@@ -1,21 +1,27 @@
 apiVersion: batch/v1
-kind: Job
+kind: CronJob
 metadata:
   name: {{ .Values.namespace }}-db-migration
   namespace: {{ .Values.namespace }}
 spec:
-  template:
+  schedule: '* * * * *'   
+  suspend: true           
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1    
+  jobTemplate:
     spec:
-      containers:
-        - name: {{ .Values.namespace }}-db-migration
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-          command: ["/bin/sh", "-c"]
-          args:
-            - |
-              {{ .Values.commands.migrate }} && \
-              {{ .Values.commands.seed }}
-          env:
-          envFrom:
-          - secretRef:
-              name: {{ .Values.namespace }}-app-secret
-      restartPolicy: Never
+      backoffLimit: 0  
+      template:
+        spec:
+          containers:
+            - name: {{ .Values.namespace }}-db-migration
+              image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  {{ .Values.commands.migrate }} && \
+                  {{ .Values.commands.seed }}
+              envFrom:
+                - secretRef:
+                    name: {{ .Values.namespace }}-app-secret
+          restartPolicy: Never 
