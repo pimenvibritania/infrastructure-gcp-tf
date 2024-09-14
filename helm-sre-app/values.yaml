@@ -3,13 +3,18 @@ namespace: sre-application
 replicaCount: 1
 
 image:
-  repository: pimenvibritania/sre-example:v1-linux
+  repository: pimenvibritania/sre-example
   pullPolicy: Always
-  tag: ""
+  tag: latest
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+
+commands:
+  migrate: "npm run migrate"
+  seed: "npm run seed"
+  start: "npm start"
 
 serviceAccount:
   # Specifies whether a service account should be created

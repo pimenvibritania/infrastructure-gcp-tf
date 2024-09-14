@@ -49,6 +49,7 @@ gitlab-runner run
 ```
 
 ## Installing APPLICATION with Helm
+- Install cert manager first by applying `YAML` on `k8s/cert-manager.yaml`
 - Look at `helm-sre-app` directory
 - Make sure the `values.yaml` & `dev-values.yaml`
 - Run the helm with

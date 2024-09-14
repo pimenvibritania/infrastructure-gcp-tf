@@ -26,7 +26,12 @@ spec:
           envFrom:
           - secretRef:
               name: {{ .Values.namespace }}-app-secret
-          image: {{ .Values.image.repository }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              {{ .Values.commands.start }} 
+
           # command: ["sleep", "3600"]
           # livenessProbe:
           #   failureThreshold: 3
