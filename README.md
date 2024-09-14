@@ -1,4 +1,7 @@
-# SRE-Infra
+# SRE Infrastructure
+
+## Application Deployment
+Please refer [this Repository](https://gitlab.com/pimenvibritania/sre) documentation deploy application!
 
 ## Topology
 ![Topology](sre.svg)
@@ -7,6 +10,7 @@
 - Make sure the `0-locals.tf` file
 - Create `gcs` bucket based on `1-provider.tf`
 - Applying `terraform`
+
 
 ## Installing ingress-nginx
 ```
